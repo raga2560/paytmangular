@@ -1,0 +1,287 @@
+
+<html ng-app="sportsApp">
+
+<head>
+  <title>HTTP Post Example</title>
+  <style>
+    .player {
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body ng-controller="MainCtrl">
+  <h1>Hello Servers!</h1>
+  <div ng-repeat="player in players"        class="player">
+    <div><span ng-bind="player.name"></span></div>
+    <div> playing <span ng-bind="player.game"></span></div>
+	<div> age <span ng-bind="player.age"></span></div>
+  </div>
+
+  <div>
+    
+  </div>
+
+  <div>
+    	
+		<table border="1">
+			<tbody>
+				<tr>
+					<th>S.No</th>
+					<th>Label</th>
+					
+					<th>Value</th>
+					<th>Example</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td><label>ORDER_ID::*</label></td>
+					<td><input id="ORDER_ID" tabindex="1" maxlength="20" size="20"
+						name="ORDER_ID" autocomplete="off"
+						ng-model="order.ORDER_ID"
+						> 
+					</td> <td>
+						"vidisha123"
+					</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td><label>CUSTID ::*</label></td>
+					<td><input id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" 
+					ng-model="order.CUST_ID"
+					>
+					</td> <td>					
+					CUST001
+					</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td><label>INDUSTRY_TYPE_ID ::*</label></td>
+					<td><input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" 
+					ng-model="order.INDUSTRY_TYPE_ID"
+					>  
+										</td> <td>					
+					{{config.INDUSTRY_TYPE_ID}}</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td><label>Channel ::*</label></td>
+					<td><input id="CHANNEL_ID" tabindex="4" maxlength="12"
+						size="12" name="CHANNEL_ID" autocomplete="off" 
+						ng-model="order.CHANNEL_ID"
+						>
+					</td> <td>											
+						{{config.CHANNEL_ID }}
+					</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td><label>txnAmount*</label></td>
+					<td><input title="TXN_AMOUNT" tabindex="10"
+						type="text" name="TXN_AMOUNT" ng-model="order.TXN_AMOUNT"
+						>
+					</td> <td>											
+						"1"
+					</td>
+				</tr>
+                                <tr>
+					<td>6</td>
+					<td><label>MID</label></td>
+					<td><input title="MID" tabindex="10"
+						type="text" name="MID"
+						ng-model="order.MID"
+						 > 
+					</td> <td>											 
+						 {{config.MID }}
+					</td>
+				</tr>
+                                <tr>
+					<td>7</td>
+					<td><label>WEBSITE</label></td>
+					<td><input title="WEBSITE" tabindex="10"
+						type="text" name="WEBSITE"
+						ng-model="order.WEBSITE"
+						>
+					</td> <td>											
+						{{config.WEBSITE }}
+					</td>
+				</tr>
+                                <tr>
+					<td>8</td>
+					<td><label>PAYTM_MERCHANT_KEY</label></td>
+					<td><input title="WEBSITE" tabindex="10"
+						type="text" name="PAYTM_MERCHANT_KEY"
+						ng-model="order.PAYTM_MERCHANT_KEY"
+						>
+					</td> <td>											
+						{{ config.PAYTM_MERCHANT_KEY }}
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td><button value="CheckOut"  ng-click="sendtransaction()" id ="user-submit" > CheckOut </button></td>
+				</tr>
+			</tbody>
+		</table>
+		
+	<button ng-click="getInfo()"> get multichain info</button>
+  </div>
+<!-- script
+  src="angular.min.js">
+</script -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+  angular.module('sportsApp', [])
+    .controller('MainCtrl', function($scope, $http) { 
+      
+      $scope.players = [];
+      $scope.newplayer = {};
+	  
+var PAYTM_STAG_URL = 'https://pguat.paytm.com';
+var PAYTM_PROD_URL = 'https://secure.paytm.in';
+var MID = 'WorldP64425807474247';
+var PAYTM_ENVIORMENT = 'TEST';   // PROD FOR PRODUCTION
+var PAYTM_MERCHANT_KEY = 'kbzk1DSbJiV_O3p5';
+var WEBSITE = 'worldpressplg';
+var CHANNEL_ID =  'WEB';
+var INDUSTRY_TYPE_ID = 'Retail';
+var PAYTM_FINAL_URL = '';
+if (PAYTM_ENVIORMENT== 'TEST') {
+
+ PAYTM_FINAL_URL = PAYTM_STAG_URL + '/oltp-web/processTransaction'
+}else
+{
+  PAYTM_FINAL_URL = PAYTM_PROD_URL + '/oltp-web/processTransaction'
+}
+
+$scope.config = {
+
+    MID: MID,
+    PAYTM_MERCHANT_KEY :PAYTM_MERCHANT_KEY,
+    PAYTM_FINAL_URL :PAYTM_FINAL_URL,
+    WEBSITE: WEBSITE,
+    CHANNEL_ID: CHANNEL_ID,
+    INDUSTRY_TYPE_ID: INDUSTRY_TYPE_ID
+
+};
+$scope.order = {};
+
+var setup = function()
+{
+$scope.order = {
+
+    MID: MID,
+    PAYTM_MERCHANT_KEY :PAYTM_MERCHANT_KEY,
+    PAYTM_FINAL_URL :PAYTM_FINAL_URL,
+    WEBSITE: WEBSITE,
+    CHANNEL_ID: CHANNEL_ID,
+	TXN_AMOUNT: "10",
+	ORDER_ID: 'abcd',
+	CUST_ID: 'ramesh',
+    INDUSTRY_TYPE_ID: INDUSTRY_TYPE_ID
+
+};
+}
+	setup();
+	/*
+      var fetchPlayers = function() {
+	  
+         return $http.get('/demo/getplayers').then(function(response) {
+          $scope.players = response.data;
+        }, function(errResponse) {
+          console.error('Error while fetching players');
+        });
+      };
+
+      fetchPlayers();
+
+      $scope.addplayer = function() {
+        $http.post('/demo/insertplayer', $scope.newplayer).then(function(response) {
+		
+			fetchPlayers();
+		
+		}, function(errResponse) {
+          console.error('Error while inserting player');
+        });
+      };
+	  
+	  $scope.getInfo = function() {
+        $http.post('/demo/getInfo', $scope.newplayer).then(function(response) {
+		
+			alert(angular.toJson(response.data));
+		
+		}, function(errResponse) {
+          console.error('Error while getting info');
+        });
+      };
+	  */
+	  
+	   $scope.processtransaction = function(p1) {
+/*
+var url = "https://pguat.paytm.com/oltp-web/processTransaction=JSON_CALLBACK";
+var responsePromise = $http.jsonp( url,
+             {  params : p1
+              }
+            );
+			
+			*/
+/*
+responsePromise.success(function(data) {
+    // do something with the returned JavaScript object
+    // ( in the "data" parameter ).
+	alert(angular.fromJson(data));
+});
+
+       
+responsePromise.error(function(data) {
+    // do something with the returned JavaScript object
+    // ( in the "data" parameter ).
+	alert(angular.fromJson(data));
+});
+	   */
+	   
+      };
+	 
+// http://tutorials.jenkov.com/angularjs/ajax.html
+	 
+
+	 $scope.processtransaction = function(p1) {
+	 
+	 }
+
+
+	  $scope.sendtransaction = function() {
+	   	//alert(angular.toJson($scope.order.TXN_AMOUNT));
+		//return;
+		
+        $http.post('http://localhost:3000/testtxn', $scope.order).then(function(response) {
+		
+			//alert(angular.toJson(response.config.data));
+			//alert(angular.fromJson(response));
+			//$scope.processtransaction(response);
+			
+			/*for (name in response) { 
+				console.log(name); 
+				console.log(response[name] ); 
+				}
+				*/
+				
+				var hero = response.config.data;
+
+
+for (var p in hero) {
+    console.log(p+': '+hero[p]);
+}
+$scope.processtransaction(hero);
+
+		
+		}, function(errResponse) {
+          console.error('Error while getting info');
+        });
+      };
+
+    });
+</script>
+</body>
+</html>
