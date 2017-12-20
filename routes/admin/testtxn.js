@@ -29,10 +29,8 @@ res.render('testtxn.ejs',{'config' : config});
         console.log(PAYTM_MERCHANT_KEY);
         checksum.genchecksum(paramarray, PAYTM_MERCHANT_KEY, function (err, result) 
         {
-			console.log('hello1');
               console.log(result);
-			  
-		   res.json(result );
+           res.render('pgredirect.ejs',{ 'restdata' : result });
         });
 
         console.log("POST Order end");

@@ -3,6 +3,7 @@ var config = require('../../config/config');
 module.exports = function (app) {
 	app.post('/response', function(req,res){
    console.log("in response post");
+   exit();
    var paramlist = req.body;
         var paramarray = new Array();
         console.log(paramlist);

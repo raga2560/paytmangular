@@ -23,7 +23,7 @@
   </div>
 
   <div>
-    	<form method="post" action="http://localhost:3000/testtxn" name="f2"> 
+    	
 		<table border="1">
 			<tbody>
 				<tr>
@@ -124,8 +124,17 @@
 				</tr>
 			</tbody>
 		</table>
-		</form>
 <div>
+<form method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="f1"> 
+		<table border="1">
+			<tbody>
+			<div ng-repeat="mydata in restdata">
+			test
+				<input type="hidden" name='{{mydata.id}}' value='{{mydata.item}}'>
+				</div>
+			
+			</tbody>
+		</table>
 		
 </div>		
    
@@ -221,9 +230,7 @@ var randomString = function(length) {
 	$scope.restdata = [];
 
 	  $scope.sendtransaction = function() {
-	   document.f2.submit();
 	   
-	   /*
         $http.post('http://localhost:3000/testtxn', $scope.order).then(function(response) {
 		
 		$scope.restdata = response.data.restdata;
@@ -231,7 +238,7 @@ var randomString = function(length) {
 		
 		}, function(errResponse) {
           console.error('Error while getting info');
-        }); */
+        });
       };
 
     });
